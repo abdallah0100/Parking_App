@@ -23,6 +23,9 @@ public class ParkingSimulatorFragment extends Fragment {
         View view = inflater.inflate(R.layout.parking_simulator_layout, container, false);
         TextView cityView = view.findViewById(R.id.cityText);
         TextView parkView = view.findViewById(R.id.parkText);
+        TextView avblSlots = view.findViewById(R.id.avbl_slots);
+        TextView takenSlots = view.findViewById(R.id.taken_slots);
+
         GridLayout grid = view.findViewById(R.id.gridSlots);
 
        if (getArguments() == null){
@@ -36,6 +39,10 @@ public class ParkingSimulatorFragment extends Fragment {
 
            int rows = ParkData.slots.length;
            int cols = ParkData.slots[0].length;
+
+           int avbl = 0;
+           int taken = 0;
+
            grid.setRowCount(rows);
            grid.setColumnCount(cols);
             int[] idealCords = ParkData.findClosestSlot(ParkData.slots);
@@ -45,11 +52,13 @@ public class ParkingSimulatorFragment extends Fragment {
                    ImageView slotImageView = new ImageView(requireContext());
 
                    if (ParkData.slots[i][j] == 1) {
+                       avbl++;
                        if (i == idealCords[0] && j == idealCords[1])
                            slotImageView.setImageResource(R.drawable.ideal_slot);
                         else
                             slotImageView.setImageResource(R.drawable.avbl_slot);  // Green square for available
                    } else if (ParkData.slots[i][j] == 0){
+                       taken++;
                        slotImageView.setImageResource(R.drawable.taken_slot);  // Red square for taken
                    }else
                        slotImageView.setImageResource(R.drawable.unavbl_slot);  // Red square for taken
@@ -67,6 +76,13 @@ public class ParkingSimulatorFragment extends Fragment {
                    grid.addView(slotImageView);
                }
            }
+           String s = avbl + ".";
+           if (avbl > 0)
+               avblSlots.setText(s);
+
+           s = taken + ".";
+           if (taken > 0)
+               takenSlots.setText(s);
        }
 
         return view;
