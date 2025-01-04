@@ -7,7 +7,7 @@
     <string name="city">City</string>
     <string name="park">Park</string>
     <string name="continue_string">Continue</string>
-    <string name="parking_simulator">Parking_Simulator</string>
+    <string name="parking_simulator">Parking Simulator</string>
     <string name="place_holder">n/a</string>
     <string name="taken_slots">Taken Slots</string>
     <string name="available_slots">Available Slots</string>

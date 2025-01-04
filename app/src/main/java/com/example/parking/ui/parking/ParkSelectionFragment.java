@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +21,6 @@ import java.util.Arrays;
 
 public class ParkSelectionFragment extends Fragment {
     private Spinner parksSpinner;
-    private Spinner citySpinner;
-    private Button continueBtn;
 
     private ParkSelectionView selectParkView;
 
@@ -30,9 +29,9 @@ public class ParkSelectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_park_selection, container, false);
         selectParkView = new ViewModelProvider(this).get(ParkSelectionView.class);
-        citySpinner = view.findViewById(R.id.cityList);
+        Spinner citySpinner = view.findViewById(R.id.cityList);
         parksSpinner = view.findViewById(R.id.parks_list);
-        continueBtn = view.findViewById(R.id.continue_btn);
+        Button continueBtn = view.findViewById(R.id.continue_btn);
 
         /*
          * temp - delete later
@@ -80,9 +79,19 @@ public class ParkSelectionFragment extends Fragment {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show a toast when the button is clicked
-                //Toast.makeText(getContext(), "City: "+selectParkView.getSelectedCity()+", park: " + selectParkView.getSelectedPark(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "City: " + selectParkView.getSelectedCity() + ", Park: " + selectParkView.getSelectedPark(), Toast.LENGTH_SHORT).show();
+                ParkingSimulatorFragment sim = new ParkingSimulatorFragment();
 
+                Bundle args = new Bundle(); // used to pass arguments to another fragment.
+                args.putString("city", selectParkView.getSelectedCity());
+                args.putString("park", selectParkView.getSelectedPark());
+
+                sim.setArguments(args);
+
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, sim) // `R.id.fragment_container` should be the container for fragments in your activity layout
+                        .addToBackStack(null) // Optional: Add to back stack so user can navigate back
+                        .commit();
             }
         });
 
