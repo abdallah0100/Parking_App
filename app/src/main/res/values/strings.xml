@@ -11,4 +11,5 @@
     <string name="place_holder">n/a</string>
     <string name="taken_slots">Taken Slots</string>
     <string name="available_slots">Available Slots</string>
+    <string name="park_entry">Park Entry</string>
 </resources>
