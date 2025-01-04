@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,9 +81,11 @@ public class ParkSelectionFragment extends Fragment {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show a toast when the button is clicked
-                //Toast.makeText(getContext(), "City: "+selectParkView.getSelectedCity()+", park: " + selectParkView.getSelectedPark(), Toast.LENGTH_SHORT).show();
 
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new ParkingSimulatorFragment())
+                        .addToBackStack(null) // TODO Add to back stack so user can navigate back
+                        .commit();
             }
         });
 
